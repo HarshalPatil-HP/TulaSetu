@@ -1,0 +1,126 @@
+/**
+ * index.css — Global styles and Tailwind directives
+ *
+ * Only global resets and base styles go here.
+ * Component-specific styles use Tailwind utility classes directly in JSX.
+ * Design tokens are defined in tailwind.config.js — not here.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base reset ──────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-surface text-text-primary font-sans antialiased;
+    min-height: 100dvh;
+    margin: 0;
+  }
+
+  /* Smooth focus outlines — visible for keyboard users, not distracting for mouse */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-600 rounded-sm;
+  }
+
+  /* Remove default button styles to allow full Tailwind control */
+  button {
+    cursor: pointer;
+  }
+}
+
+/* ── Reusable component layer ────────────────────────────────────────────── */
+@layer components {
+  /* Card — standard container for all dashboard sections */
+  .card {
+    @apply bg-white rounded-card shadow-card p-5;
+  }
+
+  .card-hover {
+    @apply card transition-shadow duration-200 hover:shadow-card-hover;
+  }
+
+  /* Status badge — always includes text, never color alone (accessibility) */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-valid {
+    @apply badge bg-status-valid-bg text-status-valid;
+  }
+
+  .badge-pending {
+    @apply badge bg-status-pending-bg text-status-pending;
+  }
+
+  .badge-rejected {
+    @apply badge bg-status-rejected-bg text-status-rejected;
+  }
+
+  /* Button variants — filled primary, outlined secondary */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 
+           bg-primary-600 hover:bg-primary-700 active:bg-primary-800
+           text-white text-sm font-semibold rounded-lg
+           transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-primary-400;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5
+           border border-primary-600 text-primary-600
+           hover:bg-primary-50 active:bg-primary-100
+           text-sm font-semibold rounded-lg
+           transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-primary-400;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5
+           bg-status-rejected hover:bg-red-700 active:bg-red-800
+           text-white text-sm font-semibold rounded-lg
+           transition-colors duration-150;
+  }
+
+  /* Form inputs — consistent across all forms */
+  .form-input {
+    @apply w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm
+           focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none
+           placeholder:text-gray-400 transition-colors duration-150;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-text-primary mb-1.5;
+  }
+
+  .form-error {
+    @apply mt-1 text-xs text-status-rejected;
+  }
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Skeleton loading animation */
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  /* Hide scrollbar but keep scrollability */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
